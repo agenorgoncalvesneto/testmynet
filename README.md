@@ -27,14 +27,14 @@ Download geckodriver and move it for testmynet/venv/bin/
 
 For 32-bit linux use
 ```shell
-$ wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
+$ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
 $ tar -xf geckodriver-v0.24.0-linux32.tar.gz
 $ mv geckodriver testmynet/venv/bin/
 ```
 
 For 64-bit linux use
 ```shell
-$ wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+$ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 $ tar -xf geckodriver-v0.24.0-linux64.tar.gz
 $ mv geckodriver testmynet/venv/bin/
 ```
