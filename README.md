@@ -2,9 +2,10 @@
 
 A command line interface to test the internet speed using testmy.net
 
+
 ## requisites
 
-The prerequisites for run *testmynet* are ```firefox```, ```python``` and ```virtualenv```.
+The prerequisites for run *testmynet* are ```firefox```, ```python3``` and ```virtualenv```.
 
 
 ## install
@@ -23,6 +24,7 @@ $ source testmynet/venv/bin/activate
 ```
 
 Download geckodriver and move it for testmynet/venv/bin/
+
 For 32-bit linux use
 ```shell
 $ wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
@@ -52,7 +54,7 @@ For typical test use the command-line below
 
 For see help
 ```shell
-(venv) $ python testmynet.py --h
+(venv) $ python testmynet.py -h
 usage: testmynet [-h] [-d | -u]
 
 A command line interface to test the internet speed using testmy.net
@@ -75,11 +77,12 @@ After perform tests, just deactivate the virtual environment
 (venv) $ deactivate
 ```
 
+
 ## uninstall
 
 For uninstall *testmynet* just remove the testmynet directory
 
 ```shell
-$ rm -r testmynet
+$ rm -r testmynet/
 ```
 
