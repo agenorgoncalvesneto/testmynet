@@ -1,5 +1,3 @@
-#!/home/neto/documents/python/testmynet/venv/bin/python
-
 from argparse import ArgumentParser
 from selenium import webdriver
 
@@ -9,12 +7,13 @@ class TestMyNet():
 
         self.url = 'https://www.testmy.net'
         self.args = args
+        self.str_result = ''
          
-        #print('loading browser...')
         self.load_browser()
         
         if args.list:
             self.print_servers()
+            self.browser.quit()
             exit()
            
         if args.server is not None:
@@ -46,6 +45,7 @@ class TestMyNet():
             self.browser = webdriver.Chrome()
         except:
             print('webdriver error')
+            self.browser.quit()
             exit()
         else:
             return
@@ -54,7 +54,6 @@ class TestMyNet():
 
         print(f'testing {test_name} speed...')
 
-        #self.browser.implicitly_wait(30)
         url = f'{self.url}/{test_name}'
         self.load_url(url)
 
@@ -62,6 +61,8 @@ class TestMyNet():
 
         elem_start = self.browser.find_elements_by_class_name('button')[-1]
         elem_start.click()
+
+        self.get_result(test_name)
 
     def load_url(self, url):
 
@@ -74,7 +75,7 @@ class TestMyNet():
         
     def get_servers(self):
 
-        url = 'https://testmy.net/mirror'
+        url = f'{self.url}/mirror'
         self.load_url(url)
         
         elems_servers = self.browser.find_elements_by_class_name('lead')
@@ -84,9 +85,12 @@ class TestMyNet():
 
     def print_servers(self):
         
+        str_servers = ''
         servers = self.get_servers()
         for code, name in servers.items():
-            print(f'{code} {name.text}')
+            code = str(code).rjust(2)
+            str_servers += f'{code} {name.text}\n'
+        print(str_servers)
 
     def set_server(self, code):
 
@@ -95,27 +99,21 @@ class TestMyNet():
             servers[code].click()
         except KeyError:
             print('server code error')
+            self.browser.quit()
             exit()
         
+    def get_result(self, test_name):
+        
+        if test_name == 'download':
+            elem = self.browser.find_element_by_class_name('color22')
+        elif test_name == 'upload':
+            elem = self.browser.find_element_by_class_name('color23')
+        self.str_result += f' | {test_name} {elem.text}'
+
     def print_result(self):
 
-        str_result = ''
-        str_result += f'server: {self.current_server}\n'
-        try:
-            elem = self.browser.find_element_by_class_name('color22')
-        except:
-            pass
-        else:
-            str_result += f'download: {elem.text}'
-
-        try:
-            elem = self.browser.find_element_by_class_name('color23')
-        except:
-            pass
-        else:
-            str_result += f'upload: {elem.text}'
-
-        print(str_result)
+        self.str_result = f'server {self.current_server}{self.str_result}'
+        print(self.str_result)
 
 
 def main():
