@@ -5,18 +5,19 @@ A command line interface to test the internet speed using testmy.net
 
 ## requisites
 
-The requisites for install *testmynet* are ```firefox```, ```python3``` and ```virtualenv```.
+The requisites for install and run *testmynet* are ```firefox```, ```python3``` and ```virtualenv```.
 
 
 ## install
 
-Clone this repository
-```shell
+Clone this repository and make the file testmynet.py executable
+```
 $ git clone https://github.com/agenorgoncalvesneto/testmynet.git
+$ chmod +x testmynet/testmynet.py
 ```
 
 Create a virtual environment and install the requirements
-```shell
+```
 $ virtualenv -p python3 testmynet/venv
 $ source testmynet/venv/bin/activate
 (venv) $ pip install --upgrade pip
@@ -26,14 +27,14 @@ $ source testmynet/venv/bin/activate
 Download geckodriver and move it for testmynet/venv/bin/
 
 For 32-bit linux use
-```shell
+```
 $ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
 $ tar -xf geckodriver-v0.24.0-linux32.tar.gz && rm geckodriver-v0.24.0-linux32.tar.gz
 $ mv geckodriver testmynet/venv/bin/
 ```
 
 For 64-bit linux use
-```shell
+```
 $ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 $ tar -xf geckodriver-v0.24.0-linux64.tar.gz && rm geckodriver-v0.24.0-linux64.tar.gz
 $ mv geckodriver testmynet/venv/bin/
@@ -42,14 +43,14 @@ $ mv geckodriver testmynet/venv/bin/
 
 ## usage
 
-Move for testmynet directory and active the virtual environment
-```shell
-$ source venv/bin/activate
+Move for testmynet directory
+```
+$ cd testmynet
 ```
 
 For typical test use the command line below
-```shell
-(venv) $ python testmynet.py
+```
+$ ./testmynet.py
 testing download speed...
 testing upload speed...
 server Dallas, TX | download 9.3 Mbps | upload 4 Mbps
@@ -57,8 +58,8 @@ test successfully concluded
 ```
 
 For see help
-```shell
-(venv) $ python testmynet.py -h
+```
+$ ./testmynet.py -h
 usage: testmynet [-h] [-d | -u] [--list] [--server]
 
 A command line interface to test the internet speed using testmy.net
@@ -74,8 +75,8 @@ See more on www.github.com/agenorgoncalvesneto/testmynet
 ```
 
 For instance, the command line below  will show a list of testmy.net servers
-```shell
-(venv) $ python testmynet.py --list
+```
+$ ./testmynet.py --list
  1 Central US — Dallas, TX, USA
  2 Central US — Colorado Springs, CO, USA
  3 East Coast US — Miami, FL, USA
@@ -92,24 +93,18 @@ For instance, the command line below  will show a list of testmy.net servers
 ```
 
 Then the command line below will run only download test using Los Angele server
-```shell
-(venv) $ python testmynet.py --no-upload --server 5
+```
+$ ./testmynet.py --no-upload --server 5
 testing download speed...
 server Los Angeles, CA | download 4.6 Mbps
 test successfully concluded
-```
-
-After perform tests, just deactivate the virtual environment
-```shell
-(venv) $ deactivate
 ```
 
 
 ## uninstall
 
 For uninstall *testmynet* just remove the testmynet directory
-
-```shell
+```
 $ sudo rm -r testmynet/
 ```
 

@@ -1,3 +1,5 @@
+#!./venv/bin/python
+
 from argparse import ArgumentParser
 from selenium import webdriver
 
@@ -34,7 +36,7 @@ class TestMyNet():
         try:
             opts = webdriver.FirefoxOptions()
             opts.headless = True
-            self.browser = webdriver.Firefox(options=opts)
+            self.browser = webdriver.Firefox(executable_path='./venv/bin/geckodriver' ,options=opts)
             #self.browser = webdriver.Firefox()
         except:
             pass
@@ -45,7 +47,6 @@ class TestMyNet():
             self.browser = webdriver.Chrome()
         except:
             print('webdriver error')
-            self.browser.quit()
             exit()
         else:
             return
