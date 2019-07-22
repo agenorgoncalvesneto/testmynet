@@ -10,45 +10,39 @@ The requisites for install and run *testmynet* are ```firefox```, ```python3``` 
 
 ## install
 
-Clone this repository and make the file testmynet.py executable
+Clone this repository, move for testmynet directory and make the file testmynet.py executable
 ```
 $ git clone https://github.com/agenorgoncalvesneto/testmynet.git
-$ chmod +x testmynet/testmynet.py
+$ cd testmynet/ && chmod +x testmynet.py
 ```
 
-Create a virtual environment and install the requirements
+Create and activate a virtual environment and install the requirements
 ```
-$ virtualenv -p python3 testmynet/venv
-$ source testmynet/venv/bin/activate
+$ virtualenv -p python3 venv && source venv/bin/activate
 (venv) $ pip install --upgrade pip
 (venv) $ pip install -r requirements.txt && deactivate
 ```
 
-Download geckodriver and move it for testmynet/venv/bin/
+Download geckodriver and move it for venv/bin/
 
 For 32-bit linux use
 ```
 $ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
 $ tar -xf geckodriver-v0.24.0-linux32.tar.gz && rm geckodriver-v0.24.0-linux32.tar.gz
-$ mv geckodriver testmynet/venv/bin/
+$ mv geckodriver venv/bin/
 ```
 
 For 64-bit linux use
 ```
 $ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 $ tar -xf geckodriver-v0.24.0-linux64.tar.gz && rm geckodriver-v0.24.0-linux64.tar.gz
-$ mv geckodriver testmynet/venv/bin/
+$ mv geckodriver venv/bin/
 ```
 
 
 ## usage
 
-Move for testmynet directory
-```
-$ cd testmynet
-```
-
-For typical test use the command line below
+In the testmynet directory, for typical test use the command line below
 ```
 $ ./testmynet.py
 testing download speed...
