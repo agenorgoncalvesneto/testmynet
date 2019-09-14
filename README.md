@@ -72,7 +72,7 @@ optional arguments:
 See more on www.github.com/agenorgoncalvesneto/testmynet
 ```
 
-In this manner, the command line below will run only download test using the server 5
+Thus the command line below will run only download test using the server 5
 ``` shell
 $ ./testmynet.py --no-upload --server 5
 ```
