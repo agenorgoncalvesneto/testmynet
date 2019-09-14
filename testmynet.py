@@ -68,7 +68,7 @@ class TestMyNet():
         try:
             self.browser.get(url)
         except:
-            print('load url error')
+            print('url load error')
             self.browser.quit()
             exit()
 
