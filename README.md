@@ -72,27 +72,7 @@ optional arguments:
 See more on www.github.com/agenorgoncalvesneto/testmynet
 ```
 
-For instance, the command line below  will show a list of testmy.net servers
-``` shell
-$ ./testmynet.py --list
-```
-```
- 1 Central US — Dallas, TX, USA
- 2 Central US — Colorado Springs, CO, USA
- 3 East Coast US — Miami, FL, USA
- 4 East Coast US — New York, NY, USA
- 5 West Coast US — Los Angeles, CA, USA
- 6 West Coast US — San Francisco, CA, USA
- 7 North America — Toronto, CA
- 8 Europe — London, GB
- 9 Europe — Frankfurt, DE
-10 Asia — Tokyo, JP
-11 Asia — Singapore, SG
-12 Asia — Bangalore, IN
-13 Australia — Sydney, AU
-```
-
-Then the command line below will run only download test using Los Angele server
+Thus the command line below will run only download test using the server 5
 ``` shell
 $ ./testmynet.py --no-upload --server 5
 ```
@@ -109,4 +89,3 @@ For uninstall *testmynet* just remove the testmynet directory
 ``` shell
 $ sudo rm -r testmynet/
 ```
-
