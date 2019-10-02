@@ -6,6 +6,7 @@ from selenium import webdriver
 class TestMyNet():
 
     def __init__(self, args):
+        ''' TestMyNet, ArgumentParse -> None '''
 
         self.url = 'https://www.testmy.net'
         self.args = args
@@ -32,19 +33,14 @@ class TestMyNet():
         print('test successfully concluded')
 
     def load_browser(self):
-
+        ''' TestMyNet -> None
+        Tries to load the Firefox wedriver in path ./venv/bin/geckcriver
+        Exits the program if a error is raised.
+        '''
         try:
             opts = webdriver.FirefoxOptions()
             opts.headless = True
             self.browser = webdriver.Firefox(executable_path='./venv/bin/geckodriver' ,options=opts)
-            #self.browser = webdriver.Firefox()
-        except:
-            pass
-        else:
-            return
-
-        try:
-            self.browser = webdriver.Chrome()
         except:
             print('webdriver error')
             exit()
@@ -52,7 +48,11 @@ class TestMyNet():
             return
 
     def start_test(self, test_name):
+        ''' TestMyNet, string -> None
 
+        test_name: name of the test that will be performed (download or upload)
+        '''
+        
         print(f'testing {test_name} speed...')
 
         url = f'{self.url}/{test_name}'
@@ -64,6 +64,10 @@ class TestMyNet():
         self.get_result(test_name)
 
     def load_url(self, url):
+        ''' TestMyNet, string -> None
+
+        url: URL that the webdriver will load
+        '''
 
         try:
             self.browser.get(url)
@@ -73,7 +77,8 @@ class TestMyNet():
             exit()
 
     def get_servers(self):
-
+        ''' TestMyNet -> dict '''
+        
         url = f'{self.url}/mirror'
         self.load_url(url)
 
@@ -83,6 +88,7 @@ class TestMyNet():
         return dict_servers
 
     def print_servers(self):
+        ''' TestMyNet -> None '''
 
         str_servers = ''
         servers = self.get_servers()
@@ -92,6 +98,10 @@ class TestMyNet():
         print(str_servers)
 
     def set_server(self, code):
+        ''' TestMyNet, string -> None
+
+        code: server code according to https://testmy.net/mirror numbered from 1
+        '''
 
         servers = self.get_servers()
         try:
@@ -102,11 +112,18 @@ class TestMyNet():
             exit()
 
     def get_server(self):
+        ''' TestMyNet -> None '''
 
         current_server = self.browser.find_element_by_class_name('signin').text
         return current_server
 
     def get_result(self, test_name):
+        ''' TestMyNet, string -> None
+
+        Gets the test result.
+
+        test_name: name of the test that was performed (download or upload)
+        '''
 
         if test_name == 'download':
             elem = self.browser.find_element_by_class_name('color22')
@@ -115,6 +132,7 @@ class TestMyNet():
         self.str_result += f' | {test_name} {elem.text}'
 
     def print_result(self):
+        ''' TestMyNet -> None '''
 
         current_server = self.get_server()
         self.str_result = f'{current_server}{self.str_result}'
