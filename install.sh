@@ -23,7 +23,7 @@ fi
 
 # Check virtualenv instalation and run setup for application
 # set +u because virtualenv fails without option
-if ! [ -x "$(virtualenv --version)" ]; then
+if ! [ -z "$(command -v virtualenv)" ]; then
     if ! [ "$(python -m venv -h)" ]; then
         echo "Virtualenv is not installed" >&2
         exit 1
