@@ -1,46 +1,22 @@
-# testmynet
+# Testmynet
 
 A command line interface to test the internet speed using [testmy.net](https://testmy.net)
 
 
-## requisites
+## Requisites
 
-The requisites for install and run *testmynet* are ```firefox```, ```python3``` and ```virtualenv```.
+The requisites for install and run *testmynet* are [Firefox](https://www.mozilla.org/en-US/firefox/new/), [python3](https://www.python.org/downloads/) and [virtualenv](https://virtualenv.pypa.io/en/latest/).
 
 
-## install
+## Install
 
-Clone this repository, move for testmynet directory and make the file testmynet.py executable
+Clone this repository, move for testmynet directory and run te installation script
 ``` shell
 $ git clone https://github.com/agenorgoncalvesneto/testmynet.git
-$ cd testmynet/ && chmod +x testmynet.py
+$ cd testmynet/ && ./install.sh
 ```
 
-Create and activate a virtual environment and install the requirements
-``` shell
-$ virtualenv -p python3 venv && source venv/bin/activate
-(venv) $ pip install --upgrade pip
-(venv) $ pip install -r requirements.txt && deactivate
-```
-
-Download geckodriver and move it for venv/bin/
-
-For 32-bit linux use
-``` shell
-$ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
-$ tar -xf geckodriver-v0.24.0-linux32.tar.gz && rm geckodriver-v0.24.0-linux32.tar.gz
-$ mv geckodriver venv/bin/
-```
-
-For 64-bit linux use
-``` shell
-$ wget github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
-$ tar -xf geckodriver-v0.24.0-linux64.tar.gz && rm geckodriver-v0.24.0-linux64.tar.gz
-$ mv geckodriver venv/bin/
-```
-
-
-## usage
+## Usage
 
 In the testmynet directory, for typical test use the command line below
 ``` shell
@@ -83,7 +59,7 @@ test successfully concluded
 ```
 
 
-## uninstall
+## Uninstall
 
 For uninstall *testmynet* just remove the testmynet directory
 ``` shell
