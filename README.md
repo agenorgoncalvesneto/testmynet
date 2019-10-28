@@ -2,23 +2,20 @@
 
 A command line interface to test the internet speed using [testmy.net](https://testmy.net).
 
----
 
 ## Requisites
 
-The requisites for install and run Testmynet are [Firefox](https://www.mozilla.org/en-US/firefox/new/), [python3](https://www.python.org/downloads/) and [virtualenv](https://virtualenv.pypa.io/en/latest/).
+The requisites for install and run Testmynet are [Firefox](https://www.mozilla.org/en-US/firefox/new/) and [python3.3](https://www.python.org/downloads/) or later.
 
----
 
 ## Install
 
-Clone this repository, move for testmynet directory and run te installation script
+Clone this repository, move for testmynet directory and run the installation script
 ``` shell
 $ git clone https://github.com/agenorgoncalvesneto/testmynet.git
 $ cd testmynet/ && ./install.sh
 ```
 
----
 
 ## Usage
 
@@ -62,7 +59,6 @@ Toronto, CA | Download 10 Mbps
 Test successfully concluded.
 ```
 
----
 
 ## Uninstall
 

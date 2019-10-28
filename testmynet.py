@@ -114,7 +114,7 @@ class Testmynet():
 
     def print_result(self):
         """Prints the result after perform the tests. The prints follow
-        the model 'Server | Download xMbps | Upload xMbps'.
+        the model 'Server | Download x Mbps | Upload x Mbps'.
         """
 
         result = self.server
