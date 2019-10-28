@@ -2,6 +2,8 @@
 
 A command line interface to test the internet speed using [testmy.net](https://testmy.net).
 
+<img src=https://github.com/agenorgoncalvesneto/testmynet/blob/master/testmynet.gif width=700>
+
 
 ## Requisites
 
@@ -28,7 +30,7 @@ $ ./testmynet.py
 ```
 ```
 Testing download and upload speeds...
-Miami, USA | Download 10.2 Mbps | Upload 1 Mbps
+Dallas, USA | Download 10 Mbps | Upload 8.1 Mbps
 Test successfully concluded.
 ```
 
@@ -51,14 +53,24 @@ optional arguments:
 
 See more on www.github.com/agenorgoncalvesneto/testmynet
 ```
-
-Thus the command line below will run only download test using the server 5
+The following command shows the servers available
 ```
-$ ./testmynet.py --download --server 5
+$ ./testmynet.py --list
+```
+```
+ 1 Dallas, USA
+ 2 Miami, USA
+...
+11 Bangalore, IN
+12 Sydney, AU
+```
+Thus, the command line below will run only download test using the server from Miami
+```
+$ ./testmynet.py -d --server 2
 ```
 ```
 Testing download speed...
-Toronto, CA | Download 10 Mbps
+Miami, USA | Download 10.3 Mbps
 Test successfully concluded.
 ```
 
