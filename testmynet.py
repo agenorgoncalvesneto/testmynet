@@ -74,10 +74,10 @@ class Testmynet():
         server = self.browser.find_element_by_class_name('im-star')
         server = server.find_element_by_xpath('..')
         server = server.text
-        server = server.strip()  # Central US — Dallas, TX, USA
-        server = server.split(' — ')[-1]  # Dallas, TX, USA
-        server = server.split(', ')  # ['Dallas', 'TX', 'USA']
-        server = '{}, {}'.format(server[0], server[-1])  # Dallas, USA
+        server = server.strip()  #Central US — Dallas, TX, USA
+        server = server.split(' — ')[-1]  #Dallas, TX, USA
+        server = server.split(', ')  #['Dallas', 'TX', 'USA']
+        server = '{}, {}'.format(server[0], server[-1])  #Dallas, USA
         self.server = server
 
     def load_browser(self):
@@ -104,7 +104,7 @@ class Testmynet():
         """Prints the details of the test performed available at
         testmy.net.
         """
-        
+
         button = self.browser.find_element_by_id('share-tab')
         button.click()
 
@@ -141,13 +141,13 @@ class Testmynet():
 
         servers = self.browser.find_element_by_class_name('list-group')
         servers = servers.text.split('\n')
-        servers = [s.strip() for s in servers]  # Central US — Dallas, TX, USA
-        servers = [s.split(' — ')[-1] for s in servers]  # Dallas, TX, USA
-        servers = [s.split(', ') for s in servers]  # ['Dallas', 'TX', 'USA']
-        servers = ['{}, {}'.format(s[0], s[-1]) for s in servers]  # Dallas, USA
+        servers = [s.strip() for s in servers]  #Central US — Dallas, TX, USA
+        servers = [s.split(' — ')[-1] for s in servers]  #Dallas, TX, USA
+        servers = [s.split(', ') for s in servers]  #['Dallas', 'TX', 'USA']
+        servers = ['{}, {}'.format(s[0], s[-1]) for s in servers]  #Dallas, USA
 
         for s in servers:
-            code = str(servers.index(s))
+            code = str(servers.index(s)+1)
             print('{} {}'.format(code.rjust(2), s))
 
         self.browser.quit()
@@ -186,7 +186,7 @@ class Testmynet():
         Parameters
         ----------
         code : int
-            Server code numbered from 0 according to testmy.net/mirror
+            Server code numbered from 1 according to testmy.net/mirror
 
         Raises
         ------
@@ -196,7 +196,7 @@ class Testmynet():
 
         try:
             servers = self.browser.find_elements_by_class_name('lead')
-            servers[code].click()
+            servers[code-1].click()
         except IndexError:
             print('Error: server code')
             self.browser.quit()

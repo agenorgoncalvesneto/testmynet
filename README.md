@@ -5,14 +5,17 @@ A command line interface to test the internet speed using [testmy.net](https://t
 
 ## Requisites
 
-The requisites for install and run Testmynet are [Firefox](https://www.mozilla.org/en-US/firefox/new/) and [python3.3](https://www.python.org/downloads/) or later.
+The requisites for install and run Testmynet are [Firefox](https://www.mozilla.org/en-US/firefox/new/) and [Python 3.3](https://www.python.org/downloads/) or later.
 
 
 ## Install
 
-Clone this repository, move for testmynet directory and run the installation script
-``` shell
+Clone this repository
+```
 $ git clone https://github.com/agenorgoncalvesneto/testmynet.git
+```
+Move for testmynet directory and run the installation script
+```
 $ cd testmynet/ && ./install.sh
 ```
 
@@ -20,7 +23,7 @@ $ cd testmynet/ && ./install.sh
 ## Usage
 
 In the testmynet directory, for typical test use the command line below
-``` shell
+```
 $ ./testmynet.py
 ```
 ```
@@ -30,7 +33,7 @@ Test successfully concluded.
 ```
 
 For see help
-``` shell
+```
 $ ./testmynet.py -h
 ```
 ```
@@ -50,7 +53,7 @@ See more on www.github.com/agenorgoncalvesneto/testmynet
 ```
 
 Thus the command line below will run only download test using the server 5
-``` shell
+```
 $ ./testmynet.py --download --server 5
 ```
 ```
@@ -63,6 +66,6 @@ Test successfully concluded.
 ## Uninstall
 
 For uninstall Testmynet just remove the testmynet directory
-``` shell
+```
 $ sudo rm -r testmynet/
 ```
