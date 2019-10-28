@@ -1,165 +1,247 @@
 #!./venv/bin/python
 
 from argparse import ArgumentParser
+
 from selenium import webdriver
 
-class TestMyNet():
+
+class Testmynet():
+    """A class to perform download and upload tests using testmy.net.
+
+    Atributes
+    ---------
+    self.browser : webdriver
+        Webdriver used to navegate in testmy.net
+    self.server : str
+        Name of server that perform the tests
+
+    Methods
+    -------
+    get_server()
+        Gets the server that will be performed test against and set it
+        in the class parameter self.server.
+    load_browser()
+        Tries to load the Firefox wedriver in path
+        ./venv/bin/geckcriver.
+    print_details()
+        Prints the details of the test performed available at
+        testmy.net.
+    print_result()
+        Prints the result after perform the tests. The prints follow the
+        model 'Server | Download xMbps | Upload xMbps'.
+    print_servers()
+        Prints all servers listed in https://testmy.net/mirror and
+        exits the program.
+    start_test()
+        Starts the download or upload test. Performs both tests if the
+        parameters only_download and only_upload are False.
+    set_server()
+        Sets the server to perform the tests against.
+    """
 
     def __init__(self, args):
-        ''' TestMyNet, ArgumentParse -> None '''
+        """Executes the workflow calling the others methods.
 
-        self.url = 'https://www.testmy.net'
-        self.args = args
-        self.str_result = ''
+        Parameters
+        ----------
+        args : ArgumentParser
+            Arguments to execute the program: download(bool), upload
+            (bool), details(bool), list(bool) and server(int).
+        """
 
         self.load_browser()
 
         if args.list:
             self.print_servers()
-            self.browser.quit()
-            exit()
 
         if args.server is not None:
             self.set_server(args.server)
 
-        if not self.args.no_download:
-            self.start_test(test_name='download')
-
-        if not self.args.no_upload:
-            self.start_test(test_name='upload')
-
+        self.get_server()
+        self.start_test(args.download, args.upload)
         self.print_result()
+
+        if args.details:
+            self.print_details()
+
         self.browser.quit()
-        print('test successfully concluded')
+
+    def get_server(self):
+        """Gets the server that will be performed test against and set
+        it in the class parameter self.server.
+        """
+
+        server = self.browser.find_element_by_class_name('im-star')
+        server = server.find_element_by_xpath('..')
+        server = server.text
+        server = server.strip()  # Central US — Dallas, TX, USA
+        server = server.split(' — ')[-1]  # Dallas, TX, USA
+        server = server.split(', ')  # ['Dallas', 'TX', 'USA']
+        server = '{}, {}'.format(server[0], server[-1])  # Dallas, USA
+        self.server = server
 
     def load_browser(self):
-        ''' TestMyNet -> None
-        Tries to load the Firefox wedriver in path ./venv/bin/geckcriver
-        Exits the program if a error is raised.
-        '''
+        """Tries to load the Firefox wedriver in path
+        ./venv/bin/geckcriver.
+
+        Raises
+        ------
+            Exits the program if any error is raised
+        """
+
         try:
             opts = webdriver.FirefoxOptions()
             opts.headless = True
-            self.browser = webdriver.Firefox(executable_path='./venv/bin/geckodriver' ,options=opts)
+            self.browser = webdriver.Firefox(
+                executable_path='./venv/bin/geckodriver',
+                options=opts)
+            self.browser.get('https://www.testmy.net/mirror')
         except:
-            print('webdriver error')
+            print('Error: webdriver')
             exit()
-        else:
-            return
 
-    def start_test(self, test_name):
-        ''' TestMyNet, string -> None
-
-        test_name: name of the test that will be performed (download or upload)
-        '''
+    def print_details(self):
+        """Prints the details of the test performed available at
+        testmy.net.
+        """
         
-        print(f'testing {test_name} speed...')
+        button = self.browser.find_element_by_id('share-tab')
+        button.click()
 
-        url = f'{self.url}/{test_name}'
-        self.load_url(url)
-
-        elem_start = self.browser.find_elements_by_class_name('button')[-1]
-        elem_start.click()
-
-        self.get_result(test_name)
-
-    def load_url(self, url):
-        ''' TestMyNet, string -> None
-
-        url: URL that the webdriver will load
-        '''
-
-        try:
-            self.browser.get(url)
-        except:
-            print('url load error')
-            self.browser.quit()
-            exit()
-
-    def get_servers(self):
-        ''' TestMyNet -> dict '''
-        
-        url = f'{self.url}/mirror'
-        self.load_url(url)
-
-        elems_servers = self.browser.find_elements_by_class_name('lead')
-        z = zip(range(1, len(elems_servers)+1), elems_servers)
-        dict_servers = dict(z)
-        return dict_servers
-
-    def print_servers(self):
-        ''' TestMyNet -> None '''
-
-        str_servers = ''
-        servers = self.get_servers()
-        for code, name in servers.items():
-            code = str(code).rjust(2)
-            str_servers += f'{code} {name.text}\n'
-        print(str_servers)
-
-    def set_server(self, code):
-        ''' TestMyNet, string -> None
-
-        code: server code according to https://testmy.net/mirror numbered from 1
-        '''
-
-        servers = self.get_servers()
-        try:
-            servers[code].click()
-        except KeyError:
-            print('server code error')
-            self.browser.quit()
-            exit()
-
-    def get_server(self):
-        ''' TestMyNet -> None '''
-
-        current_server = self.browser.find_element_by_class_name('signin').text
-        return current_server
-
-    def get_result(self, test_name):
-        ''' TestMyNet, string -> None
-
-        Gets the test result.
-
-        test_name: name of the test that was performed (download or upload)
-        '''
-
-        if test_name == 'download':
-            elem = self.browser.find_element_by_class_name('color22')
-        elif test_name == 'upload':
-            elem = self.browser.find_element_by_class_name('color23')
-        self.str_result += f' | {test_name} {elem.text}'
+        details = self.browser.find_element_by_class_name('form-control')
+        details = details.text
+        print('\n{}'.format(details))
 
     def print_result(self):
-        ''' TestMyNet -> None '''
+        """Prints the result after perform the tests. The prints follow
+        the model 'Server | Download xMbps | Upload xMbps'.
+        """
 
-        current_server = self.get_server()
-        self.str_result = f'{current_server}{self.str_result}'
-        print(self.str_result)
+        result = self.server
+        try:
+            download = self.browser.find_element_by_class_name('color22')
+            result += ' | Download {}'.format(download.text)
+        except:
+            pass
 
+        try:
+            upload = self.browser.find_element_by_class_name('color23')
+            result += ' | Upload {}'.format(upload.text)
+        except:
+            pass
 
-def main():
+        result += '\nTest successfully concluded.'
 
-    parser = ArgumentParser(prog='testmynet',
-                            description='A command line interface to test the internet speed using testmy.net',
-                            epilog='See more on www.github.com/agenorgoncalvesneto/testmynet')
-    
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument('-d', '--no-download', action='store_true',
-                       default=False, help='do not perform donwload test')
-    group.add_argument('-u', '--no-upload', action='store_true',
-                       default=False, help='do not perform upload test')
+        print(result)
 
-    parser.add_argument('--list', action='store_true',
-                        default=False, help='display a list of testmy.net servers and exit')
-    parser.add_argument('--server', metavar='',
-                        type=int, help='specify a server id to test against')
-    #parser.add_argument('-q', '--quiet', action='store_true', default=False, help='show quiet output')
-    #parser.add_argument('-v', '--verbose', action='store_true', default=False, help='show verbose output')
-    args = parser.parse_args()
-    TestMyNet(args)
+    def print_servers(self):
+        """Prints all servers listed in https://testmy.net/mirror and
+        exits the program.
+        """
+
+        servers = self.browser.find_element_by_class_name('list-group')
+        servers = servers.text.split('\n')
+        servers = [s.strip() for s in servers]  # Central US — Dallas, TX, USA
+        servers = [s.split(' — ')[-1] for s in servers]  # Dallas, TX, USA
+        servers = [s.split(', ') for s in servers]  # ['Dallas', 'TX', 'USA']
+        servers = ['{}, {}'.format(s[0], s[-1]) for s in servers]  # Dallas, USA
+
+        for s in servers:
+            code = str(servers.index(s))
+            print('{} {}'.format(code.rjust(2), s))
+
+        self.browser.quit()
+        exit()
+
+    def start_test(self, only_download, only_upload):
+        """Starts the download or upload test. Performs both tests if
+        the parameters only_download and only_upload are False.
+
+        Parameters
+        ----------
+        only_download : bool
+            If True only performs download speed test
+        only_upload : bool
+            If True only performs upload speed upload test
+        """
+
+        btns = self.browser.find_elements_by_class_name('btn')
+        btn_download = btns[0]
+        btn_upload = btns[1]
+        btn_combined = btns[2]
+
+        if only_download:
+            print('Testing download speed...')
+            btn_download.click()
+        elif only_upload:
+            print('Testing upload speed...')
+            btn_upload.click()
+        else:
+            print('Testing download and upload speeds...')
+            btn_combined.click()
+
+    def set_server(self, code):
+        """Sets the server to perform the tests against.
+
+        Parameters
+        ----------
+        code : int
+            Server code numbered from 0 according to testmy.net/mirror
+
+        Raises
+        ------
+        IndexError
+            If the code is not a valid server list index
+        """
+
+        try:
+            servers = self.browser.find_elements_by_class_name('lead')
+            servers[code].click()
+        except IndexError:
+            print('Error: server code')
+            self.browser.quit()
+            exit()
+
 
 if __name__ == '__main__':
 
-    main()
+    parser = ArgumentParser(
+        prog='Testmynet',
+        description="""A command line interface to test the internet speed
+                    using testmy.net""",
+        epilog='See more on www.github.com/agenorgoncalvesneto/testmynet')
+
+    group = parser.add_mutually_exclusive_group()
+
+    group.add_argument(
+        '-d', '--download',
+        action='store_true',
+        default=False,
+        help='performs only download test')
+
+    group.add_argument(
+        '-u', '--upload',
+        action='store_true',
+        default=False,
+        help='performs only upload test')
+
+    parser.add_argument(
+        '--details',
+        action='store_true',
+        default=False,
+        help='show the details after perform the tests')
+
+    parser.add_argument(
+        '--list',
+        action='store_true',
+        default=False,
+        help='display a list of testmy.net servers and exit')
+
+    parser.add_argument(
+        '--server',
+        metavar='',
+        type=int,
+        help='specify a server code to test against')
+
+    args = parser.parse_args()
+    Testmynet(args)
