@@ -198,7 +198,7 @@ class Testmynet():
             servers = self.browser.find_elements_by_class_name('lead')
             servers[code].click()
         except IndexError:
-            print('Error: Server code')
+            print('Error: server code')
             self.browser.quit()
             exit()
 
