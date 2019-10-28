@@ -2,7 +2,7 @@
 
 A command line interface to test the internet speed using [testmy.net](https://testmy.net).
 
-<img src=https://github.com/agenorgoncalvesneto/testmynet/blob/master/testmynet.gif width=700>
+<img src=images/testmynet.gif width=700>
 
 
 ## Requisites
