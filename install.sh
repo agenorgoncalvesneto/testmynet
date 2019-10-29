@@ -23,21 +23,12 @@ fi
 
 # Check virtualenv instalation and run setup for application
 # set +u because virtualenv fails without option
-if ! [ -z "$(command -v virtualenv)" ]; then
-    if ! [ "$(python3 -m venv -h)" ]; then
-        echo "Virtualenv is not installed" >&2
-        exit 1
-    else
-        set +u
-        python3 -m venv venv && source venv/bin/activate
-        pip install --upgrade pip || pip3 install --upgrade pip
-        pip install -r requirements.txt || pip3 install -r requirements.txt
-        deactivate
-        set -u
-    fi
+if ! [ "$(python3 -m venv -h)" ]; then
+    echo "Venv is not installed" >&2
+    exit 1
 else
     set +u
-    virtualenv -p python3 venv && source venv/bin/activate
+    python3 -m venv venv && source venv/bin/activate
     pip install --upgrade pip || pip3 install --upgrade pip
     pip install -r requirements.txt || pip3 install -r requirements.txt
     deactivate
