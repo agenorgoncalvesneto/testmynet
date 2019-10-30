@@ -17,26 +17,26 @@ class Testmynet():
 
     Methods
     -------
-    get_server()
-        Gets the server that will be performed test against and set it
-        in the class parameter self.server.
     load_browser()
         Tries to load the Firefox wedriver in path
         ./venv/bin/geckcriver.
-    print_details()
-        Prints the details of the test performed available at
-        testmy.net.
-    print_result()
-        Prints the result after perform the tests. The prints follow the
-        model 'Server | Download xMbps | Upload xMbps'.
     print_servers()
         Prints all servers listed in https://testmy.net/mirror and
         exits the program.
+    set_server()
+        Sets the server to perform the tests against.
+    get_server()
+        Gets the server that will be performed test against and set it
+        in the class parameter self.server.
     start_test()
         Starts the download or upload test. Performs both tests if the
         parameters only_download and only_upload are False.
-    set_server()
-        Sets the server to perform the tests against.
+    print_result()
+        Prints the result after perform the tests. The prints follow the
+        model 'Server | Download xMbps | Upload xMbps'.
+    print_details()
+        Prints the details of the test performed available at
+        testmy.net.
     """
 
     def __init__(self, args):
@@ -66,20 +66,6 @@ class Testmynet():
 
         self.browser.quit()
 
-    def get_server(self):
-        """Gets the server that will be performed test against and set
-        it in the class parameter self.server.
-        """
-
-        server = self.browser.find_element_by_class_name('im-star')
-        server = server.find_element_by_xpath('..')
-        server = server.text
-        server = server.strip()  #Central US — Dallas, TX, USA
-        server = server.split(' — ')[-1]  #Dallas, TX, USA
-        server = server.split(', ')  #['Dallas', 'TX', 'USA']
-        server = '{}, {}'.format(server[0], server[-1])  #Dallas, USA
-        self.server = server
-
     def load_browser(self):
         """Tries to load the Firefox wedriver in path
         ./venv/bin/geckcriver.
@@ -100,40 +86,6 @@ class Testmynet():
             print('Error: webdriver')
             exit()
 
-    def print_details(self):
-        """Prints the details of the test performed available at
-        testmy.net.
-        """
-
-        button = self.browser.find_element_by_id('share-tab')
-        button.click()
-
-        details = self.browser.find_element_by_class_name('form-control')
-        details = details.text
-        print('\n{}'.format(details))
-
-    def print_result(self):
-        """Prints the result after perform the tests. The prints follow
-        the model 'Server | Download x Mbps | Upload x Mbps'.
-        """
-
-        result = self.server
-        try:
-            download = self.browser.find_element_by_class_name('color22')
-            result += ' | Download {}'.format(download.text)
-        except:
-            pass
-
-        try:
-            upload = self.browser.find_element_by_class_name('color23')
-            result += ' | Upload {}'.format(upload.text)
-        except:
-            pass
-
-        result += '\nTest successfully concluded.'
-
-        print(result)
-
     def print_servers(self):
         """Prints all servers listed in https://testmy.net/mirror and
         exits the program.
@@ -152,6 +104,44 @@ class Testmynet():
 
         self.browser.quit()
         exit()
+
+    def set_server(self, code):
+        """Sets the server to perform the tests against.
+
+        Parameters
+        ----------
+        code : int
+            Server code numbered from 1 according to testmy.net/mirror
+
+        Raises
+        ------
+        IndexError
+            If the code is not a valid server list index
+        """
+
+        try:
+            if code < 1:
+                raise IndexError
+            servers = self.browser.find_elements_by_class_name('lead')
+            servers[code-1].click()
+        except IndexError:
+            print('Error: server code')
+            self.browser.quit()
+            exit()
+
+    def get_server(self):
+        """Gets the server that will be performed test against and set
+        it in the class parameter self.server.
+        """
+
+        server = self.browser.find_element_by_class_name('im-star')
+        server = server.find_element_by_xpath('..')
+        server = server.text
+        server = server.strip()  #Central US — Dallas, TX, USA
+        server = server.split(' — ')[-1]  #Dallas, TX, USA
+        server = server.split(', ')  #['Dallas', 'TX', 'USA']
+        server = '{}, {}'.format(server[0], server[-1])  #Dallas, USA
+        self.server = server
 
     def start_test(self, only_download, only_upload):
         """Starts the download or upload test. Performs both tests if
@@ -180,27 +170,39 @@ class Testmynet():
             print('Testing download and upload speeds...')
             btn_combined.click()
 
-    def set_server(self, code):
-        """Sets the server to perform the tests against.
-
-        Parameters
-        ----------
-        code : int
-            Server code numbered from 1 according to testmy.net/mirror
-
-        Raises
-        ------
-        IndexError
-            If the code is not a valid server list index
+    def print_result(self):
+        """Prints the result after perform the tests. The prints follow
+        the model 'Server | Download x Mbps | Upload x Mbps'.
         """
 
+        result = self.server
         try:
-            servers = self.browser.find_elements_by_class_name('lead')
-            servers[code-1].click()
-        except IndexError:
-            print('Error: server code')
-            self.browser.quit()
-            exit()
+            download = self.browser.find_element_by_class_name('color22')
+            result += ' | Download {}'.format(download.text)
+        except:
+            pass
+
+        try:
+            upload = self.browser.find_element_by_class_name('color23')
+            result += ' | Upload {}'.format(upload.text)
+        except:
+            pass
+
+        result += '\nTest successfully concluded.'
+
+        print(result)
+
+    def print_details(self):
+        """Prints the details of the test performed available at
+        testmy.net.
+        """
+
+        button = self.browser.find_element_by_id('share-tab')
+        button.click()
+
+        details = self.browser.find_element_by_class_name('form-control')
+        details = details.text
+        print('\n{}'.format(details))
 
 
 if __name__ == '__main__':
