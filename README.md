@@ -81,3 +81,11 @@ For uninstall Testmynet just remove the testmynet directory
 ```
 $ sudo rm -r testmynet/
 ```
+
+
+## Todo
+
+* install.sh: to verify if python3.3 or latter is installed.
+* testmynet.py: allow to repeat tests.
+* readme.md: update gif and usage section.
+* images: update images to show repeat test.
